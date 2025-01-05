@@ -1,14 +1,35 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function UserInvite() {
+export default function UserInvite() {
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const handleStartChat = () => {
+    if (username.trim() !== "") {
+      // Navigate to /chat and pass the username
+      navigate("/chat", { state: { username } });
+    } else {
+      alert("Please enter a username!");
+    }
+  };
+
   return (
-    <div className='w-full h-screen bg-gray-700 flex justify-center items-center'>
-        <div className="text-center">
-            <input type="text" placeholder='enter username' className='p-2 bg-slate-500 rounded-xl text-white my-2' />
-            <br />
-            <button className='px-2 py-1 bg-blue-500 rounded-xl text-white'>Start Chatting</button>
-        </div>
+    <div className="h-screen flex flex-col justify-center items-center bg-gray-800 text-white">
+      <h1 className="text-2xl font-bold mb-4">Welcome to Chat App</h1>
+      <input
+        type="text"
+        placeholder="Enter your username"
+        className="p-2 border-2 rounded-lg w-64 mb-4"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <button
+        className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600"
+        onClick={handleStartChat}
+      >
+        Start Chat
+      </button>
     </div>
-  )
+  );
 }
-
-export default UserInvite
